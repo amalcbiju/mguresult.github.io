@@ -1,0 +1,123 @@
+// JavaScript Document
+function loginVal(){
+	if(!document.getElementById('user_name').value){
+		alert("Please Enter Username !!");
+		document.getElementById('user_name').focus();
+		return false;
+	}
+	else if(!document.getElementById('user_pass').value){
+		alert("Please Enter Password !!");
+		document.getElementById('user_pass').focus();
+		return false;
+	}
+	else{
+		return true;
+	}
+}
+
+function validatePwd(Password)
+{
+	//alert(Password);
+	if(Password.length < 6)
+	{
+		 alert("Password must contain at least six characters!");
+		 document.getElementById('upassword').focus();
+		 return false;
+	}
+	
+	var pwdPattern=/[\W_]/g;
+	if(!Password.match(/\d/) || !Password.match(/[a-zA-Z]/) || !Password.match(pwdPattern))
+	{
+	
+	    alert("password must contains at least 1 number, 1alphabet and 1 special character");
+		 document.getElementById('upassword').focus();
+		return false;	
+	}
+	else
+	{
+		return true;
+	}
+}
+function number(e)
+{	
+	var key;
+	var keychar;
+	if (window.event){
+		key = window.event.keyCode;		
+	}else if (e){
+		key = e.which;	
+		//alert(key);	
+	}
+	else
+		return true;
+	if((key == 8) || (key == 0))
+		return true;
+	keychar = String.fromCharCode(key);
+	keychar = keychar.toLowerCase();
+	if((key > 47) && (key < 58)){			
+		return true;
+	}else
+	    return false;	
+}
+function sel(cbThis){
+	cbId=cbThis.value;
+	chk	=cbThis.checked;
+cb='cb'+cbId;
+	var chkfellow = document.getElementsByName(cb+'[]');//alert(chkfellow.length);
+	frst=chkfellow[0].checked;
+	for (var i = 0; i < chkfellow.length; i++)
+	{//alert(i);
+		chkfellow[i].checked=chk;
+	}
+	//chkfellow[0].checked=false;
+}
+function sel2(cbId,dis){
+/*cb='cb'+cbId;
+	var chkfellow = document.getElementsByName(cb+'[]');
+	chkfellow[0].checked=false;*/
+	if(dis.checked==false){//alert(cbId);
+		document.getElementById('cbAll'+cbId).checked=false;
+	}
+	/*else
+	{
+		flag=true;
+	}*/
+	//alert(flag);
+}
+function setChk_all()
+{
+	
+}
+function get_college_id(college_id)
+{
+	cb='cb'+college_id;
+	frmCheckform	= document.usercreation;
+	var chkcollege= document.getElementsByName(cb+'[]');
+	for (var i = 0; i < chkcollege.length; i++)
+	{
+			if (chkcollege[i].checked)
+			{	
+				if(collegeId=="")
+				{
+				  collegeId="," + collegeId + chkcollege[i].value+",";	
+				}
+				else
+				{
+				  collegeId = collegeId + chkcollege[i].value+",";	
+				}
+							
+			}
+			else
+			{
+				chkcollege[i].checked=false;
+				collegeId=collegeId.replace(chkcollege[i].value,',');
+			}
+	}
+	document.getElementById('txtcollegecourse').value=collegeId;
+	//var x=",1,2,3,44,22,11,";
+	//var t=',2,';
+	//var x=x.replace(t,','); 
+//	alert(x);
+	//alert(collegeId);
+	//alert(collegeId+"---------"+collegecourse_id);
+}

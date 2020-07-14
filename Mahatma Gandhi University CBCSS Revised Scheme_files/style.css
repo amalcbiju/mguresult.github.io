@@ -1,0 +1,107 @@
+body {
+	font-family: Arial, sans-serif;
+	font-size: small;
+	text-align: center;
+	margin: 0;
+	background: #f0f0f0 url(../images/body_bg.png) repeat-x;
+}
+
+#container {
+    background: none repeat scroll 0 0 #FFFFFF;
+    margin: 0 auto;
+    padding: 0;
+    width: 1024px;
+}
+#container-inner {
+    background: none repeat scroll 0 0 #FFFFFF;
+    margin: 0 auto;
+    padding: 0;
+    width: 920px;
+}
+.header {
+    margin: 0 auto;
+    padding: 0; background-image:url(../images/page_bg.jpg); background-repeat:repeat-x;
+	padding-left:5px;
+	font-family:Arial, Helvetica, sans-serif; font-size:28px; color:#FFFFFF; 
+}
+.footer{
+	margin: 0 auto;
+    padding: 0; 
+	font-family:Arial, Helvetica, sans-serif; font-size:11px; color:#2E8B57;
+        background: rgb(97,148,93); /* Old browsers */
+/*background: -moz-linear-gradient(top,  rgba(97,148,93,1) 0%, rgba(0,97,148,1) 100%); /* FF3.6+ */
+/*background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(97,148,93,1)), color-stop(100%,rgba(0,79,145,1))); /* Chrome,Safari4+ */
+/*background: -webkit-linear-gradient(top,  rgba(97,148,93,1) 0%,rgba(0,97,148,1) 100%); /* Chrome10+,Safari5.1+ */
+/*background: -o-linear-gradient(top,  rgba(97,148,93,1) 0%,rgba(0,97,148,1) 100%); /* Opera 11.10+ */
+/*background: -ms-linear-gradient(top,  rgba(97,148,93,1) 0%,rgba(0,97,148,1) 100%); /* IE10+ */
+/*background: linear-gradient(to bottom,  rgba(97,148,93,1) 0%,rgba(0,97,148,1) 100%); /* W3C */
+/*filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#356aa0', endColorstr='#004f91',GradientType=0 ); */
+/* IE6-9 */
+background: rgb(231,235,242); /* Old browsers */
+background: -moz-linear-gradient(top,  rgba(231,235,242,1) 0%, rgba(0,231,235,1) 100%); /* FF3.6+ */
+background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(231,235,242,1)), color-stop(100%,rgba(0,231,235,242,1))); /* Chrome,Safari4+ */
+background: -webkit-linear-gradient(top,  rgba(231,235,242,1) 0%,rgba(0,231,235,1) 100%); /* Chrome10+,Safari5.1+ */
+background: -o-linear-gradient(top,  rgba(231,235,242,1) 0%,rgba(0,231,235,242,1) 100%); /* Opera 11.10+ */
+background: -ms-linear-gradient(top,  rgba(231,235,242,1) 0%,rgba(0,231,235,242,1) 100%); /* IE10+ */
+background: linear-gradient(to bottom,  rgba(231,235,242,1) 0%,rgba(0,231,235,242,1) 100%); /* W3C */
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#e7ebf2', endColorstr='#e7ebf2',GradientType=0 ); /* IE6-9 */
+}
+.menu_bg{
+	/*background-image:url(../images/menu_bg.jpg); background-repeat:repeat-x;background:#0f83b3;*/
+        
+background: rgb(231,235,242); /* Old browsers */
+background: -moz-linear-gradient(top,  rgba(231,235,242,1) 0%, rgba(0,231,235,1) 100%); /* FF3.6+ */
+background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(231,235,242,1)), color-stop(100%,rgba(0,231,235,242,1))); /* Chrome,Safari4+ */
+background: -webkit-linear-gradient(top,  rgba(231,235,242,1) 0%,rgba(0,231,235,1) 100%); /* Chrome10+,Safari5.1+ */
+background: -o-linear-gradient(top,  rgba(231,235,242,1) 0%,rgba(0,231,235,242,1) 100%); /* Opera 11.10+ */
+background: -ms-linear-gradient(top,  rgba(231,235,242,1) 0%,rgba(0,231,235,242,1) 100%); /* IE10+ */
+background: linear-gradient(to bottom,  rgba(231,235,242,1) 0%,rgba(0,231,235,242,1) 100%); /* W3C */
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#e7ebf2', endColorstr='#e7ebf2',GradientType=0 ); /* IE6-9 */
+
+
+}
+.menu_font{
+	 font-family:Verdana, Arial, Helvetica, sans-serif; font-size:12px; color:#2E8B57; text-decoration:none; font-weight:bold;
+}
+.menu_font_selected{
+	 font-family:Verdana, Arial, Helvetica, sans-serif; font-size:13px; color:#e7ebf2; text-decoration:none; font-weight:bold;
+}
+.hyperlink
+{
+  font-family:Verdana, Arial, Helvetica, sans-serif;
+  font-size:13px;
+  color:#000066;
+  text-decoration:none;
+  font-weight:bold;
+}
+
+.tpl_white_fnt1{
+	font-family:Verdana, Geneva, sans-serif; font-size:11px; color:#FFF; font-weight:bold;	
+}
+.login_tb{
+	width:100px; height:18px; border:solid 1px #999;	font-family:Verdana, Geneva, sans-serif; font-size:11px; color:#000;
+}
+#nav {
+	  margin: 50px;
+	  z-index: 10;
+	  display: block;
+	}
+	#nav li { float: left; }
+	#nav li:hover { position: relative }
+	 
+	#nav li a { display: block; }
+	 
+	#nav li ul {
+	  margin-top: -2px;
+	  display: none;
+	}
+	#nav li:hover ul {
+	  display:block;
+	  position:absolute;
+	}
+	 
+	#nav li ul li a {
+	  width: 150px;
+	}
+        
+        

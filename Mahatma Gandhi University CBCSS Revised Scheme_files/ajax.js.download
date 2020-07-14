@@ -1,0 +1,745 @@
+/*#####################################################################
+Author : Shamnas K.S
+Dated  : 18-03-2011
+#####################################################################*/
+
+var xmlhttp,elem_id='',func_name1='';
+var null_feild1 = new Array();
+function GetXmlHttpObject(){
+	if (window.XMLHttpRequest){
+  	// code for IE7+, Firefox, Chrome, Opera, Safari
+  		return new XMLHttpRequest();
+ 	 }
+	if (window.ActiveXObject){
+  	// code for IE6, IE5
+  		return new ActiveXObject("Microsoft.XMLHTTP");
+ 	}
+return null;
+}
+
+
+function ajaxCall(url,str,elem_id1,null_feild,func_name){ 
+  // alert("111");
+    /*var religion  = document.getElementById('applicantReligion').value;
+    var community = document.getElementById('applicantCommunity').value;
+    if(community==8){
+        document.getElementById("ebfct1").style.display = 'block';
+        document.getElementById("EBFC").selectedIndex = 0;
+    }else{
+        document.getElementById("ebfct1").style.display = 'none';       
+           document.getElementById("EBFC").selectedIndex = 0;
+    }
+    if(community==4 || community==5 || community==8){
+        document.getElementById("oec1").style.display = 'block';
+        document.getElementById("oec3").selectedIndex = 0;
+        document.getElementById("oeccaste2").selectedIndex = 0;
+        document.getElementById("oeccaste").style.display = 'none';
+    }else{
+        document.getElementById("oec1").style.display = 'none';
+        document.getElementById("oec3").selectedIndex = 0;
+        document.getElementById("oeccaste").style.display = 'none';
+        document.getElementById("oeccaste2").selectedIndex = 0;
+          }
+	elem_id = elem_id1;
+	func_name1 = func_name;
+	null_feild1 = null_feild;
+	xmlhttp=GetXmlHttpObject();
+	if (xmlhttp==null) {
+  		alert ("Your browser does not support AJAX!");
+  		return;
+ 	}
+	//var url="getcustomer.asp";
+	url=url+str;
+	url=url+"&sid="+Math.random();//alert(url);
+	//alert(url);//return;
+	xmlhttp.onreadystatechange=handler;
+	xmlhttp.open("GET",url,true);
+	xmlhttp.send(null);*/
+	elem_id = elem_id1;
+	func_name1 = func_name;
+	null_feild1 = null_feild;
+	xmlhttp=GetXmlHttpObject();
+	if (xmlhttp==null) {
+  		alert ("Your browser does not support AJAX!");
+  		return;
+ 	}
+	//var url="getcustomer.asp";
+	url=url+str;
+	url=url+"&sid="+Math.random();//alert(url);
+	//alert(url);//return;
+	xmlhttp.onreadystatechange=handler;
+	xmlhttp.open("GET",url,true);
+	xmlhttp.send(null);
+}
+
+function dfunc(fname,arg1){
+	window[fname](arg1);
+}
+
+function handler(){
+	if (xmlhttp.readyState==4) {//alert(xmlhttp.responseText);
+	  document.getElementById(elem_id).innerHTML=xmlhttp.responseText;	
+	  if(func_name1!='' && func_name1!=undefined){
+	  	dfunc(func_name1,'');
+	  }
+  	}
+	else{
+		document.getElementById(elem_id).innerHTML="<img src=\"images/wait.gif\" />";	
+	}
+}
+
+function validateApplNo(applicationno){
+	xmlhttp=GetXmlHttpObject();
+	if (xmlhttp==null) {
+  		alert ("Your browser does not support AJAX!");
+  		return;
+ 	}
+	var url="modules/public/validateApplNo.php";
+		
+	stud_id	= document.getElementById('student_id').value;//Edit case
+	
+	url=url+"?appl_no="+applicationno+"&student_id="+stud_id;
+	
+	url=url+"&sid="+Math.random();//alert(url);
+	//alert(url);//return;
+	xmlhttp.onreadystatechange=retApplVal;
+	xmlhttp.open("GET",url,true);
+	xmlhttp.send(null);
+}
+function retApplVal(){
+	if (xmlhttp.readyState==4) {//alert(xmlhttp.responseText);
+	 	document.getElementById('appl_no_spn').innerHTML="";
+		if(xmlhttp.responseText){
+			alert(xmlhttp.responseText);	
+			document.getElementById('frm_application_no').value="";
+		}
+		
+  	}
+	else{
+		document.getElementById('appl_no_spn').innerHTML="<img src=\"images/wait.gif\" />";	
+	}
+}
+function loadPrograms(college_id){//alert("ssss");
+	xmlhttp=GetXmlHttpObject();
+	if (xmlhttp==null) {
+  		alert ("Your browser does not support AJAX!");
+  		return;
+ 	}
+	var url="modules/public/loadPrograms.php";
+	url=url+"?college_id="+college_id;
+	url=url+"&sid="+Math.random();//alert(url);
+	//alert(url);//return;
+	xmlhttp.onreadystatechange=retPgms;
+	xmlhttp.open("GET",url,true);
+	xmlhttp.send(null);
+}
+function retPgms(){
+	if (xmlhttp.readyState==4) {//alert(xmlhttp.responseText);
+	 	/*
+		if(xmlhttp.responseText){
+			alert(xmlhttp.responseText);	
+			document.getElementById('frm_application_no').value="";
+		}*/
+		document.getElementById('pgm_div').innerHTML=xmlhttp.responseText;
+		loadCourseCategory('');
+		//loadCourse('');
+		//document.getElementById('pgm_div').innerHTML="<img src=\"images/loadingAnimation.gif\" />";	
+  	}
+	else{
+		document.getElementById('pgm_div').innerHTML="<img src=\"images/loadingAnimation.gif\" />";	
+	}
+}
+function loadCourseCategory(program_id,dflt,selected_subj){//alert(program_id);
+	xmlhttp=GetXmlHttpObject();
+	if(dflt) df=dflt;
+	else df='';
+	selected_subjct=selected_subj;
+	if (xmlhttp==null) {
+  		alert ("Your browser does not support AJAX!");
+  		return;
+ 	}
+	exam_id			= document.getElementById('exam_id').value;
+	
+	var url="modules/public/loadCourseCategory.php";
+	url=url+"?program_id="+program_id+"&default="+dflt+"&exam_id="+exam_id;
+	url=url+"&sid="+Math.random();//alert(url);
+	//alert(url);//return;
+	xmlhttp.onreadystatechange=retCourseCategory;
+	xmlhttp.open("GET",url,true);
+	xmlhttp.send(null);
+}
+function retCourseCategory(){
+	if (xmlhttp.readyState==4) {//alert(xmlhttp.responseText);
+	 	/*
+		if(xmlhttp.responseText){
+			alert(xmlhttp.responseText);	
+			document.getElementById('frm_application_no').value="";
+		}*/
+		document.getElementById('crse_cat_div').innerHTML=xmlhttp.responseText;
+		if(df){loadCourse(df,selected_subjct)}loadCourse(df,selected_subjct);
+		//document.getElementById('pgm_div').innerHTML="<img src=\"images/loadingAnimation.gif\" />";	
+  	}
+	else{
+		document.getElementById('crse_cat_div').innerHTML="<img src=\"images/loadingAnimation.gif\" />";	
+	}
+}
+
+function loadCourse(crse_cat_id,dflt){//alert(crse_cat_id);
+	xmlhttp=GetXmlHttpObject();
+	if (xmlhttp==null) {
+  		alert ("Your browser does not support AJAX!");
+  		return;
+ 	}
+	var url="modules/public/loadCourse.php";
+	pgm_id=document.getElementById('program_id').value;
+	exam_id			= document.getElementById('exam_id').value;
+	url=url+"?crse_cat_id="+crse_cat_id+"&pgm_id="+pgm_id+"&dfalt="+dflt+"&exam_id="+exam_id;
+	url=url+"&sid="+Math.random();//alert(url);
+	//alert(url);//return;
+	xmlhttp.onreadystatechange=retCourse;
+	xmlhttp.open("GET",url,true);
+	xmlhttp.send(null);
+}
+function retCourse(){
+	if (xmlhttp.readyState==4) {//alert(xmlhttp.responseText);
+	 	/*
+		if(xmlhttp.responseText){
+			alert(xmlhttp.responseText);	
+			document.getElementById('frm_application_no').value="";
+		}*/
+		
+		document.getElementById('crse_div').innerHTML=xmlhttp.responseText;
+		 //
+		//document.getElementById('pgm_div').innerHTML="<img src=\"images/loadingAnimation.gif\" />";	
+  	}
+	else{
+		document.getElementById('crse_div').innerHTML="<img src=\"images/loadingAnimation.gif\" />";	
+	}
+}
+
+function getPaperCount(){
+	xmlhttp=GetXmlHttpObject();
+	if (xmlhttp==null) {
+  		alert ("Your browser does not support AJAX!");
+  		return;
+ 	}
+	var url			= "modules/public/loadPaperCount.php";
+	exam_id			= document.getElementById('exam_id').value;
+	college_id		= document.getElementById('college_id').value;
+	pgm_id			= document.getElementById('program_id').value;
+	course_cat_id	= document.getElementById('course_cat_id').value;
+	course_id		= document.getElementById('course_id').value;
+	//alert("ss");
+	url=url+"?college_id="+college_id+"&pgm_id="+pgm_id+"&course_cat_id="+course_cat_id+"&course_id="+course_id+"&exam_id="+exam_id;
+	url=url+"&sid="+Math.random();//alert(url);
+	//alert(url);//return;
+	xmlhttp.onreadystatechange=retpaperCountResult;
+	xmlhttp.open("GET",url,true);
+	xmlhttp.send(null);
+}
+function retpaperCountResult(){
+	if (xmlhttp.readyState==4) {//alert(xmlhttp.responseText);
+	 	/*
+		if(xmlhttp.responseText){
+			alert(xmlhttp.responseText);	
+			document.getElementById('frm_application_no').value="";
+		}*/
+		document.getElementById('paper_count_result').innerHTML=xmlhttp.responseText;
+		//document.getElementById('pgm_div').innerHTML="<img src=\"images/loadingAnimation.gif\" />";	
+  	}
+	else{
+		document.getElementById('paper_count_result').innerHTML="<img src=\"images/loadingAnimation.gif\" />";	
+	}
+}
+
+function loadSubject(exam){
+	xmlhttp=GetXmlHttpObject();
+	if (xmlhttp==null) {
+  		alert ("Your browser does not support AJAX!");
+  		return;
+ 	}
+	var url="modules/officials/loadSubjects.php";
+	
+	url=url+"?exam="+exam;
+	
+	url=url+"&sid="+Math.random();//alert(url);
+	//alert(url);//return;
+	xmlhttp.onreadystatechange=retLoadSubject;
+	xmlhttp.open("GET",url,true);
+	xmlhttp.send(null);
+}
+function retLoadSubject(){
+	if (xmlhttp.readyState==4) {//alert(xmlhttp.responseText);
+	 	document.getElementById('subjct_div').innerHTML=xmlhttp.responseText;
+  	}
+	else{
+		document.getElementById('subjct_div').innerHTML="<img src=\"images/wait.gif\" />";	
+	}
+}
+
+function loadPrograms4PRN(college_id,selected_pgm,selected_course_cat,selected_subjct,sel_box_width){//alert("ssss");
+	xmlhttp=GetXmlHttpObject();
+	selp=selected_pgm;
+	selected_subj=selected_subjct;
+	selected_course_catg=selected_course_cat;
+	if (xmlhttp==null) {
+  		alert ("Your browser does not support AJAX!");
+  		return;
+ 	}
+	var url="modules/public/loadProgramsGeneral.php";
+	url=url+"?college_id="+college_id+"&selected_pgm="+selected_pgm+"&sel_box_width="+sel_box_width;
+	url=url+"&sid="+Math.random();//alert(url);
+	//alert(url);//return;
+	xmlhttp.onreadystatechange=retPgms4PRN;
+	xmlhttp.open("GET",url,true);
+	xmlhttp.send(null);
+}
+function retPgms4PRN(){
+	if (xmlhttp.readyState==4) {//alert(xmlhttp.responseText);
+	 	/*
+		if(xmlhttp.responseText){
+			alert(xmlhttp.responseText);	
+			document.getElementById('frm_application_no').value="";
+		}*/
+		document.getElementById('pgm_div').innerHTML=xmlhttp.responseText;//alert(selected_course_catg);
+		loadCourseCategory(selp,selected_course_catg,selected_subj);
+		//loadCourse('');
+		//document.getElementById('pgm_div').innerHTML="<img src=\"images/loadingAnimation.gif\" />";	
+  	}
+	else{
+		document.getElementById('pgm_div').innerHTML="<img src=\"images/loadingAnimation.gif\" />";	
+	}
+}
+
+function loadStudents(){
+	xmlhttp=GetXmlHttpObject();
+	if (xmlhttp==null) {
+  		alert ("Your browser does not support AJAX!");
+  		return;
+ 	}
+	var url="modules/officials/loadStudents4Absentees.php";
+	
+	collgegeCode= document.getElementById('college_cod').value;
+	examId		= document.getElementById('exam').value;
+	branchId	= document.getElementById('brnchs').value;
+	paperId		= document.getElementById('subj').value;
+	
+	url=url+"?colg="+collgegeCode+"&xam="+examId+"&brnch="+branchId+"&papr="+paperId;
+	
+	url=url+"&sid="+Math.random();//alert(url);
+	//alert(url);//return;
+	xmlhttp.onreadystatechange=retLoadStudents;
+	xmlhttp.open("GET",url,true);
+	xmlhttp.send(null);
+}
+function retLoadStudents(){
+	if (xmlhttp.readyState==4) {//alert(xmlhttp.responseText);
+	 	document.getElementById('students_div').innerHTML=xmlhttp.responseText;
+  	}
+	else{
+		document.getElementById('students_div').innerHTML="<img src=\"images/wait.gif\" />";	
+	}
+}
+
+function displExaminer(examinerCode,qpcode,camp){
+	if(examinerCode){
+		xmlhttp=GetXmlHttpObject();
+		if (xmlhttp==null) {
+			alert ("Your browser does not support AJAX!");
+			return;
+		}
+		var url="modules/public/examinerDtls.php";
+		
+		url=url+"?examinerCode="+examinerCode;
+                url=url+"&qpcode="+qpcode;
+                url=url+"&camp="+camp;
+		
+		url=url+"&sid="+Math.random();//alert(url);
+		//alert(url);//return;
+		xmlhttp.onreadystatechange=retDisplExaminer;
+		xmlhttp.open("GET",url,true);
+		xmlhttp.send(null);
+	}
+}
+function displExaminer2(examinerCode,qpcode,camp){
+	if(examinerCode){
+		xmlhttp=GetXmlHttpObject();
+		if (xmlhttp==null) {
+			alert ("Your browser does not support AJAX!");
+			return;
+		}
+		var url="modules/public/examinerDetails.php";
+		
+		url=url+"?examinerCode="+examinerCode;
+                url=url+"&qpcode="+qpcode;
+                url=url+"&camp="+camp;
+		
+		url=url+"&sid="+Math.random();//alert(url);
+		//alert(url);//return;
+		xmlhttp.onreadystatechange=retDisplExaminer;
+		xmlhttp.open("GET",url,true);
+		xmlhttp.send(null);
+	}
+}
+function retDisplExaminer(){
+	if (xmlhttp.readyState==4) {//alert(xmlhttp.responseText);
+	 	document.getElementById('examinerDiv').innerHTML=xmlhttp.responseText;
+  	}
+	else{
+		document.getElementById('examinerDiv').innerHTML="<img src=\"images/wait.gif\" />";	
+	}
+}
+
+/******added by Lima : 9-07-2015**************/
+function displExaminerName(examinerCode){
+	if(examinerCode){
+		xmlhttp=GetXmlHttpObject();
+		if (xmlhttp==null) {
+			alert ("Your browser does not support AJAX!");
+			return;
+		}
+		var url="modules/public/getexaminerdet.php";
+		
+		url=url+"?examinerCode="+examinerCode;
+                
+		
+		url=url+"&sid="+Math.random();//alert(url);
+		//alert(url);//return;
+		xmlhttp.onreadystatechange=retDisplExaminer;
+		xmlhttp.open("GET",url,true);
+		xmlhttp.send(null);
+	}
+}
+
+function getExminerDets(){
+
+		xmlhttp=GetXmlHttpObject();
+		if (xmlhttp==null) {
+			alert ("Your browser does not support AJAX!");
+			return;
+		}
+		var url="modules/public/searchExaminers.php";
+		
+		//url=url+"?examinerCode="+examinerCode;
+                
+		
+		url=url+"&sid="+Math.random();//alert(url);
+		//alert(url);//return;
+		xmlhttp.onreadystatechange=retDisplExaminer;
+		xmlhttp.open("GET",url,true);
+		xmlhttp.send(null);
+	
+}
+/***************************/
+function getAdditionals(val,chfffff)
+{
+	//alert(val);
+	if(val==0){
+		alert("Please select Paper");
+		return false;
+	}
+var date=new Date();
+var timestamp=date.getTime();
+document.getElementById('div_examiner').innerHTML='<option>Loading...</option>';
+		var xmlhttp=GetXmlHttpObject();
+		if (xmlhttp==null) {
+			alert ("Your browser does not support AJAX!");
+			return;
+		}	  
+		var url="modules/public/getTeachercode.php";
+		var param="Id="+val+"&chiefxx="+chfffff+"&timestamp="+timestamp;
+		xmlhttp.onreadystatechange=function() {
+			if (xmlhttp.readyState==4 || xmlhttp.readyState=="complete") {
+				var res=xmlhttp.responseText;            
+				document.getElementById('div_examiner').innerHTML=res;
+			}
+		}
+		//alert(param);
+		xmlhttp.open("POST",url,true);
+		xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+		xmlhttp.setRequestHeader("Content-length", param.length);
+		xmlhttp.setRequestHeader("Connection", "close");
+		xmlhttp.send(param);
+}
+//#################Loading Grace Mark Activities####################
+function loadGraceActivity(row_num,graceCat){
+	if(row_num){
+		//#######Resetting other fields if already selected#####################
+		if(document.getElementById('grace_position_div'+row_num).innerHTML) 
+			document.getElementById('grace_position_div'+row_num).innerHTML='';
+		if(document.getElementById('grace_point_div'+row_num).innerHTML) 
+			document.getElementById('grace_point_div'+row_num).innerHTML='';
+		//######################################################################
+		row_id=row_num;
+		xmlhttp=GetXmlHttpObject();
+		if (xmlhttp==null) {
+			alert ("Your browser does not support AJAX!");
+			return;
+		}
+		var url="modules/public/graceActivity.php";
+		
+		url=url+"?row="+row_num+"&cat="+graceCat;
+		//alert(url);
+		url=url+"&sid="+Math.random();//alert(url);
+		//alert(url);//return;
+		xmlhttp.onreadystatechange=retloadGraceActivity;
+		xmlhttp.open("GET",url,true);
+		xmlhttp.send(null);
+	}
+}
+function retloadGraceActivity(){
+	if (xmlhttp.readyState==4) {//alert(tt);
+	 	document.getElementById('grace_activity_div'+row_id).innerHTML=xmlhttp.responseText;
+		calcGPoints();
+  	}
+	else{
+		document.getElementById('grace_activity_div'+row_id).innerHTML="<img src=\"images/wait.gif\" />";	
+	}
+}
+//#####################################################################
+
+//#################Loading Grace Mark Positions####################
+function loadGracePositions(row_num,graceAct){
+	if(row_num){
+		row_id=row_num;
+		
+		//#######Resetting other fields if already selected#####################
+		if(document.getElementById('grace_point_div'+row_num).innerHTML) 
+			document.getElementById('grace_point_div'+row_num).innerHTML='';
+		//######################################################################
+		
+		xmlhttp=GetXmlHttpObject();
+		if (xmlhttp==null) {
+			alert ("Your browser does not support AJAX!");
+			return;
+		}
+		var url="modules/public/gracePosition.php";
+		
+		url=url+"?row="+row_num+"&act="+graceAct;
+		//alert(url);
+		url=url+"&sid="+Math.random();//alert(url);
+		//alert(url);//return;
+		xmlhttp.onreadystatechange=retloadGracePositions;
+		xmlhttp.open("GET",url,true);
+		xmlhttp.send(null);
+	}
+}
+function retloadGracePositions(){
+	if (xmlhttp.readyState==4) {//alert(tt);
+	 	document.getElementById('grace_position_div'+row_id).innerHTML=xmlhttp.responseText;
+		calcGPoints();
+  	}
+	else{
+		document.getElementById('grace_position_div'+row_id).innerHTML="<img src=\"images/wait.gif\" />";	
+	}
+}
+//#####################################################################
+
+//#################Loading Grace Mark Positions####################
+function loadGracePoints(row_num,gracePoint){
+	if(row_num){
+		row_id=row_num;
+		xmlhttp=GetXmlHttpObject();
+		if (xmlhttp==null) {
+			alert ("Your browser does not support AJAX!");
+			return;
+		}
+		var url="modules/public/gracePoints.php";
+		
+		url=url+"?row="+row_num+"&pid="+gracePoint;
+		//alert(url);
+		url=url+"&sid="+Math.random();//alert(url);
+		//alert(url);//return;
+		xmlhttp.onreadystatechange=retloadGracePoints;
+		xmlhttp.open("GET",url,true);
+		xmlhttp.send(null);
+	}
+}
+function retloadGracePoints(){
+	if (xmlhttp.readyState==4) {//alert(tt);
+	 	document.getElementById('grace_point_div'+row_id).innerHTML=xmlhttp.responseText;
+		
+		/*crntTot	= document.getElementById('total_points').value;
+		CSel	= document.getElementById('gracePoinHid'+row_id).value;
+		if(!crntTot) crntTot=0;
+		//alert(parseFloat(crntTot));alert(parseFloat(CSel));
+		document.getElementById('total_points').value=parseFloat(crntTot)+parseFloat(CSel);*/
+		calcGPoints();
+  	}
+	else{
+		document.getElementById('grace_point_div'+row_id).innerHTML="<img src=\"images/wait.gif\" />";	
+	}
+}
+//#####################################################################
+//#################Loading Grace Mark Positions####################
+function addGraceCat(){
+	row_idd=parseInt(document.getElementById("graceTable").rows.length)+1;
+	last_row=parseInt(document.getElementById('last_row').value);
+	new_row	= last_row+1
+	document.getElementById('last_row').value=new_row;
+	if(last_row){
+		xmlhttp=GetXmlHttpObject();
+		if (xmlhttp==null) {
+			alert ("Your browser does not support AJAX!");
+			return;
+		}
+		var url="modules/public/graceCategory.php";
+		
+		url=url+"?rownum="+new_row+"&row_idd="+row_idd;
+		//alert(url);
+		url=url+"&sid="+Math.random();//alert(url);
+		//alert(url);//return;
+		xmlhttp.onreadystatechange=retaddGraceCat;
+		xmlhttp.open("GET",url,true);
+		xmlhttp.send(null);
+	}/**/
+}
+function retaddGraceCat(){
+	if (xmlhttp.readyState==4) {
+		var table = document.getElementById("graceTable");
+		var row = table.insertRow(table.rows.length);
+		var cell1 = row.insertCell(0);
+		//var cell2 = row.insertCell(1);
+  		//cell1.innerHTML = "NEW CELL1";
+  		//cell2.innerHTML = "NEW CELL2";
+		cell1.innerHTML = xmlhttp.responseText;
+		document.getElementById('total_points').focus();
+		calcGPoints();
+  	}
+	else{
+		//document.getElementById('grace_master_div').innerHTML="<img src=\"images/wait.gif\" />";	
+	}
+}
+//#####################################################################
+
+//############To delete a row##########################################
+function delete_row(e,row_num)
+{
+	/*crntTot	= document.getElementById('total_points').value; 
+	if(!crntTot) crntTot=0;
+	alert(document.getElementById('gracePoinHidd'+row_num));
+	CSel	= document.getElementById('gracePoinHid'+row_num).value;
+	if(!CSel) CSel=0;
+	diff	= parseFloat(crntTot)-parseFloat(CSel);
+	if(diff==0) diff='';
+	document.getElementById('total_points').value=diff;*/
+    e.parentNode.parentNode.parentNode.removeChild(e.parentNode.parentNode);
+	calcGPoints();
+}
+//######################################################################
+
+//######################Calculating Total Grace points##################
+function calcGPoints(){
+	sum=0;//alert(document.getElementById('last_row'));
+	var maxRow	= document.getElementById('last_row').value;
+	graceSelArrAjx	= null;//HOW TO UNSET JS ARRAY
+	graceSelArrAjx	= [];
+	prevCatAjx		= 0;
+	of_flg=0;//over flow flag
+	for(var ic=1;ic<=maxRow;ic++){
+		if(document.getElementById('gracePoinHid'+ic)){
+			cVal=document.getElementById('gracePoinHid'+ic).value;
+			if(!cVal) cVal=0;
+			if(document.getElementById('grace_cat'+ic) && document.getElementById('grace_act'+ic) && document.getElementById('grace_cat'+ic).value && document.getElementById('grace_act'+ic).value){
+				
+				crntCatAjx	= document.getElementById('grace_cat'+ic).value;
+				crntActAjx	= document.getElementById('grace_act'+ic).value;;
+				if(!graceSelArrAjx[crntCatAjx]) graceSelArrAjx[crntCatAjx]=[];
+				
+				catLimitAjx=graceArr[crntCatAjx]["CATEGORY_GRACE_LIMIT"];//defined in graceMarkRegn.php
+				actLimitAjx=graceArr[crntCatAjx][crntActAjx];//defined in graceMarkRegn.php
+				
+				catWiseSumAjx	= 0;//to store the category wise sum till now
+				actWiseSumAjx	= 0;//to store the activity wise sum till now
+				
+				if(graceSelArrAjx[crntCatAjx]['CATEGORY_GRACE_SUM'])catWiseSumAjx	= graceSelArrAjx[crntCatAjx]['CATEGORY_GRACE_SUM'];
+				if(graceSelArrAjx[crntCatAjx][crntActAjx])actWiseSumAjx	= graceSelArrAjx[crntCatAjx][crntActAjx];
+				
+				if(graceArr[crntCatAjx][crntActAjx]>0){
+					if((parseFloat(actWiseSumAjx)+parseFloat(cVal))>parseFloat(graceArr[crntCatAjx][crntActAjx]))
+					{//alert(graceArr[crntCatAjx][crntActAjx]);
+						rem=parseFloat(graceArr[crntCatAjx][crntActAjx])-parseFloat(actWiseSumAjx);
+						sum+=parseFloat(rem);
+						//if the current value+(sum till now) exceeds maximum allotted to this activity, add maximum value-(sum till now) to sum variable
+						graceSelArrAjx[crntCatAjx][crntActAjx]=parseFloat(actWiseSumAjx)+parseFloat(rem);
+						of_flg=1;
+					}
+					else{
+						sum+=parseFloat(cVal);
+						graceSelArrAjx[crntCatAjx][crntActAjx]=parseFloat(actWiseSumAjx)+parseFloat(cVal);
+					}
+				}
+				else if(graceArr[crntCatAjx]["CATEGORY_GRACE_LIMIT"]>0){
+					if((parseFloat(catWiseSumAjx)+parseFloat(cVal))>parseFloat(graceArr[crntCatAjx]["CATEGORY_GRACE_LIMIT"])){
+						rem=parseFloat(graceArr[crntCatAjx]["CATEGORY_GRACE_LIMIT"])-parseFloat(catWiseSumAjx);
+						sum+=parseFloat(rem);
+						//if the current value+(sum till now) exceeds maximum allotted to this activity, add maximum value-(sum till now) to sum variable
+						graceSelArrAjx[crntCatAjx]['CATEGORY_GRACE_SUM']=parseFloat(catWiseSumAjx)+parseFloat(rem);
+						of_flg=1;//alert("22");
+					}
+					else{
+						sum+=parseFloat(cVal);
+						graceSelArrAjx[crntCatAjx]['CATEGORY_GRACE_SUM']=parseFloat(catWiseSumAjx)+parseFloat(cVal);
+					}
+				}
+				else{
+					sum+=parseFloat(cVal);
+				}			
+			}
+			
+		}
+		/*if(of_flg==1){
+			alert("Over Flow>> Grace Point Truncated to the Maximum Value Allotted");
+		}*/
+	}
+	if(sum==0)sum='';
+	<!--if(sum>10){
+		//sum=10;
+	//}
+	if(sum>25){
+		sum=25;
+		alert ("Maximum Limit of Grace Mark is 25!");
+			//return;
+	}
+	//sum=sum.toFixed(1)
+	document.getElementById('total_points').value=sum;
+	if(sum==''){
+		document.getElementById('grace_cat_submit_but_row').style.visibility='collapse';
+	}
+	else{
+		document.getElementById('grace_cat_submit_but_row').style.visibility='visible';
+	}
+}
+//This function is to disable the user from selecting both NCC and NSS
+function checkGraceCat(cSelj,crntRow){
+	if(cSelj==2 || cSelj==3){
+		if(cSelj==2) notAllowed=3;
+		else if(cSelj==3) notAllowed=2;
+		flg=0;
+		var maxRow	= document.getElementById('last_row').value;
+		for(var icg=1;icg<=maxRow;icg++){
+			if(document.getElementById('grace_cat'+icg)){
+				if(document.getElementById('grace_cat'+icg).value==notAllowed){
+					flg=1; break;
+				}
+			}/**/
+		}
+		
+		if(flg==1){
+			alert("Sorry, You can select either NCC or NSS. Not possible to select both.");
+			document.getElementById('grace_cat'+crntRow).value=0;
+			//document.getElementById('grace_cat'+crntRow).back();
+			loadGraceActivity(crntRow,0);
+		}
+		else{
+			loadGraceActivity(crntRow,cSelj);
+		}
+	}
+	else{
+		loadGraceActivity(crntRow,cSelj);
+	}
+}
+//############To check whether the Grace Point Exceeds the Maximum value allotted for each Category/Activili
+function checkGracePoint(){
+	
+}
